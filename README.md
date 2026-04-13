@@ -27,11 +27,20 @@ $HOME/servers/
 
 ## Install
 
+### Homebrew (recommended)
+
+```bash
+brew tap simpossible/tap
+brew install mini_launch
+```
+
+### Go install
+
 ```bash
 go install github.com/simpossible/mini_launch@latest
 ```
 
-Or build from source:
+### Build from source
 
 ```bash
 git clone https://github.com/simpossible/mini_launch.git
