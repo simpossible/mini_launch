@@ -65,7 +65,7 @@ Service name: mysql
 Directory:    /Users/you/servers/mysql
 Executable:   /Users/you/servers/mysql/mysqld
 Log file:     /Users/you/servers/mysql/std.log
-Generated: /Users/you/Library/LaunchAgents/com.minilaunch.mysql.plist
+Generated: /Users/you/servers/mysql/com.minilaunch.mysql.plist
 
 Service 'mysql' initialized successfully.
 Use 'mini_launch start mysql' to start the service.
@@ -134,8 +134,8 @@ mini_launch remove mysql
 
 ### macOS (launchd)
 
-- Config location: `~/Library/LaunchAgents/com.minilaunch.<service>.plist`
-- Services auto-restart (`KeepAlive: true`) and start on login (`RunAtLoad: true`)
+- Config location: `<service_directory>/com.minilaunch.<service>.plist`
+- Services auto-restart (`KeepAlive: true`) and start on load (`RunAtLoad: true`)
 - Managed via `launchctl load/unload`
 
 ### Linux (systemd --user)

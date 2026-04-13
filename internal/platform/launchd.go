@@ -23,8 +23,7 @@ func newPlatform() Platform {
 }
 
 func plistPath(svc *service.Service) string {
-	home, _ := os.UserHomeDir()
-	return filepath.Join(home, "Library", "LaunchAgents", plistFilename(svc))
+	return filepath.Join(svc.Dir, plistFilename(svc))
 }
 
 func plistFilename(svc *service.Service) string {
@@ -37,12 +36,6 @@ func label(svc *service.Service) string {
 
 func (l *launchd) Generate(svc *service.Service) error {
 	path := plistPath(svc)
-
-	// Ensure LaunchAgents directory exists
-	dir := filepath.Dir(path)
-	if err := os.MkdirAll(dir, 0755); err != nil {
-		return fmt.Errorf("cannot create LaunchAgents directory: %w", err)
-	}
 
 	plist := buildPlist(svc)
 	if err := os.WriteFile(path, []byte(plist), 0644); err != nil {
