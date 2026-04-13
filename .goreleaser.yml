@@ -30,6 +30,7 @@ brews:
       owner: simpossible
       name: homebrew-tap
       branch: main
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
     directory: Formula
     homepage: "https://github.com/simpossible/mini_launch"
     description: "A simple cross-platform service daemon manager for macOS and Linux"
