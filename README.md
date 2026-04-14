@@ -18,19 +18,36 @@ It also establishes a simple convention for teams:
 - **Unified log location** — logs go to `std.log` in the service directory, no more hunting around.
 - **Auto environment injection** — reads `export` statements from `~/.zshrc` or `~/.bashrc`, so your daemons use the same env vars as your terminal.
 
+## Quick Start
+
+```bash
+# 1. Create a directory under $HOME/servers/ and put an executable in it
+mkdir -p $HOME/servers/myapp
+cp /path/to/myapp $HOME/servers/myapp/
+
+# 2. cd into the directory
+cd $HOME/servers/myapp
+
+# 3. Initialize and start — that's it
+mini_launch initial
+mini_launch start
+```
+
+> **Note:** Each service directory must contain exactly one executable file. `mini_launch` will auto-detect it.
+
 ## How It Works
 
 Services are organized under `$HOME/servers/`. Each service resides in its own subdirectory (nested directories are supported) with a single executable file:
 
 ```
 $HOME/servers/
-├── mysql/
-│   └── mysqld          # executable
-├── redis/
-│   └── redis-server    # executable
+├── myapp/
+│   └── myapp            # executable
+├── myserver/
+│   └── myserver         # executable
 └── web/
     └── api/
-        └── myapp       # executable → service name: web_api
+        └── api-server   # executable → service name: web_api
 ```
 
 - **Service name** = relative path from `$HOME/servers/` with `/` replaced by `_`
@@ -62,72 +79,32 @@ go build -o mini_launch .
 
 ## Usage
 
-### Initialize a service
-
-From the service directory:
+All commands can be run from within the service directory (no need to specify a service name), or from anywhere by passing the service name as an argument.
 
 ```bash
-cd $HOME/servers/mysql
-mini_launch initial
+cd $HOME/servers/myapp
+
+mini_launch initial    # generate daemon config
+mini_launch start      # start the service
+mini_launch status     # check status
+mini_launch restart    # restart
+mini_launch stop       # stop
+mini_launch remove     # stop and remove config
 ```
 
-Output:
-```
-Service name: mysql
-Directory:    /Users/you/servers/mysql
-Executable:   /Users/you/servers/mysql/mysqld
-Log file:     /Users/you/servers/mysql/std.log
-Generated: /Users/you/servers/mysql/com.minilaunch.mysql.plist
-
-Service 'mysql' initialized successfully.
-Use 'mini_launch start mysql' to start the service.
-```
-
-### Start a service
+You can also operate on services by name from any directory:
 
 ```bash
-# By service name
-mini_launch start mysql
-
-# Or from the service directory
-cd $HOME/servers/mysql
-mini_launch start
+mini_launch start myapp
+mini_launch status myapp
+mini_launch stop myapp
 ```
 
-### Stop a service
-
-```bash
-mini_launch stop mysql
-```
-
-### Restart a service
-
-```bash
-mini_launch restart mysql
-```
-
-### Check status
-
-```bash
-# All services
-mini_launch status
-
-# Specific service
-mini_launch status mysql
-```
-
-### List services
+### List all services
 
 ```bash
 mini_launch list
-```
-
-### Remove a service
-
-Stops the service and removes the daemon configuration:
-
-```bash
-mini_launch remove mysql
+mini_launch status      # status of all services
 ```
 
 ## Commands

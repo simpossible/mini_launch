@@ -18,19 +18,36 @@
 - **统一的日志位置** — 日志固定输出到服务目录下的 `std.log`，不用到处翻。
 - **环境变量自动注入** — 从 `~/.zshrc` 或 `~/.bashrc` 读取 `export` 语句，守护进程和你的终端用同一套环境变量。
 
+## 快速开始
+
+```bash
+# 1. 在 $HOME/servers/ 下创建目录，放入一个可执行文件
+mkdir -p $HOME/servers/myapp
+cp /path/to/myapp $HOME/servers/myapp/
+
+# 2. 进入目录
+cd $HOME/servers/myapp
+
+# 3. 初始化并启动，搞定
+mini_launch initial
+mini_launch start
+```
+
+> **注意：** 每个服务目录下必须只有一个可执行文件，`mini_launch` 会自动识别。
+
 ## 工作原理
 
 服务统一放在 `$HOME/servers/` 下，每个服务一个子目录（支持嵌套），目录里放一个可执行文件：
 
 ```
 $HOME/servers/
-├── mysql/
-│   └── mysqld          # 可执行文件
-├── redis/
-│   └── redis-server    # 可执行文件
+├── myapp/
+│   └── myapp            # 可执行文件
+├── myserver/
+│   └── myserver         # 可执行文件
 └── web/
     └── api/
-        └── myapp       # 可执行文件 → 服务名: web_api
+        └── api-server   # 可执行文件 → 服务名: web_api
 ```
 
 - **服务名** = 相对于 `$HOME/servers/` 的路径，`/` 替换为 `_`
@@ -62,72 +79,32 @@ go build -o mini_launch .
 
 ## 使用方法
 
-### 初始化服务
-
-在服务目录下执行：
+所有命令都可以在服务目录下直接运行（不需要指定服务名），也可以在任意目录通过服务名操作。
 
 ```bash
-cd $HOME/servers/mysql
-mini_launch initial
+cd $HOME/servers/myapp
+
+mini_launch initial    # 生成守护进程配置
+mini_launch start      # 启动服务
+mini_launch status     # 查看状态
+mini_launch restart    # 重启
+mini_launch stop       # 停止
+mini_launch remove     # 停止并删除配置
 ```
 
-输出：
-```
-Service name: mysql
-Directory:    /Users/you/servers/mysql
-Executable:   /Users/you/servers/mysql/mysqld
-Log file:     /Users/you/servers/mysql/std.log
-Generated: /Users/you/servers/mysql/com.minilaunch.mysql.plist
-
-Service 'mysql' initialized successfully.
-Use 'mini_launch start mysql' to start the service.
-```
-
-### 启动服务
+也可以在任意目录通过服务名操作：
 
 ```bash
-# 指定服务名
-mini_launch start mysql
-
-# 或者在服务目录下直接运行
-cd $HOME/servers/mysql
-mini_launch start
+mini_launch start myapp
+mini_launch status myapp
+mini_launch stop myapp
 ```
 
-### 停止服务
-
-```bash
-mini_launch stop mysql
-```
-
-### 重启服务
-
-```bash
-mini_launch restart mysql
-```
-
-### 查看状态
-
-```bash
-# 查看所有服务
-mini_launch status
-
-# 查看指定服务
-mini_launch status mysql
-```
-
-### 列出所有服务
+### 查看所有服务
 
 ```bash
 mini_launch list
-```
-
-### 移除服务
-
-停止服务并删除守护进程配置：
-
-```bash
-mini_launch remove mysql
+mini_launch status      # 查看所有服务状态
 ```
 
 ## 命令一览
