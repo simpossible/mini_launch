@@ -1,10 +1,22 @@
 # mini_launch
 
+[中文](README_zh.md)
+
 A simple cross-platform service daemon manager for macOS and Linux.
 
 `mini_launch` manages long-running services using native platform tools:
 - **macOS**: `launchd` via `launchctl`
 - **Linux**: `systemd` user services via `systemctl --user`
+
+## Why mini_launch?
+
+Writing plist or systemd service files by hand is tedious. `mini_launch` generates the config for you — one command and you're done.
+
+It also establishes a simple convention for teams:
+
+- **Unified service directory** — all services live under `$HOME/servers/`, easy to find.
+- **Unified log location** — logs go to `std.log` in the service directory, no more hunting around.
+- **Auto environment injection** — reads `export` statements from `~/.zshrc` or `~/.bashrc`, so your daemons use the same env vars as your terminal.
 
 ## How It Works
 
