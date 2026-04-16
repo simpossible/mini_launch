@@ -76,7 +76,8 @@ install() {
     local version="$3"
     local install_dir="$4"
 
-    local archive_name="${BINARY}_${version}_${os}_$( [ "$arch" = "amd64" ] && echo "x86_64" || echo "$arch" ).tar.gz"
+    local stripped_version="${version#v}"
+    local archive_name="${BINARY}_${stripped_version}_${os}_$( [ "$arch" = "amd64" ] && echo "x86_64" || echo "$arch" ).tar.gz"
     local download_url="https://github.com/${REPO}/releases/download/${version}/${archive_name}"
 
     local tmp_dir
