@@ -56,11 +56,29 @@ $HOME/servers/
 
 ## 安装
 
-### Homebrew（推荐）
+### Homebrew（macOS）
 
 ```bash
 brew tap simpossible/tap
 brew install mini_launch
+```
+
+### 一键安装（Linux & macOS）
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/simpossible/mini_launch/main/install.sh | bash
+```
+
+### DEB / RPM（Linux）
+
+从 [最新 Release](https://github.com/simpossible/mini_launch/releases/latest) 下载对应的包：
+
+```bash
+# Debian / Ubuntu
+sudo dpkg -i mini_launch_*_linux_x86_64.deb
+
+# RHEL / Fedora / CentOS
+sudo rpm -i mini_launch_*_linux_x86_64.rpm
 ```
 
 ### Go install

@@ -7,9 +7,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var version = "dev"
+
 var rootCmd = &cobra.Command{
-	Use:   "mini_launch",
-	Short: "A simple service daemon manager for macOS and Linux",
+	Use:     "mini_launch",
+	Short:   "A simple service daemon manager for macOS and Linux",
+	Version: version,
 	Long: `mini_launch manages service daemons using native platform tools:
   - macOS: launchd (launchctl)
   - Linux: systemd --user
