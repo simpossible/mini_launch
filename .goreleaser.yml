@@ -42,9 +42,6 @@ nfpms:
       - rpm
     section: "utils"
     priority: "optional"
-    contents:
-      - src: ./mini_launch
-        dst: /usr/local/bin/mini_launch
 
 brews:
   - name: mini_launch
